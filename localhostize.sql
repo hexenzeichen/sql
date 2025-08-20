@@ -23,6 +23,10 @@ tables_loop: LOOP
 	LEAVE tables_loop;
     END IF;
 
+    SET update_query = CONCAT('UPDATE ', t_name, ' SET option_value = CONCAT(\'http\:\/\/localhost/\', SUBSTRING_INDEX(option_value, \'/\', -1)) WHERE option_name IN (\'siteurl\',\'home\')');
+    PREPARE execute_query FROM update_query;
+    EXECUTE execute_query;
+    DEALLOCATE PREPARE execute_query;
 
 END LOOP tables_loop;
 
