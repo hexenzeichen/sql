@@ -13,6 +13,20 @@ DECLARE cur_tables CURSOR FOR SELECT TABLE_NAME FROM information_schema.tables W
 	
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
 
+OPEN cur_tables;
+
+tables_loop: LOOP
+
+    FETCH cur_tables INTO t_name;
+
+    IF finished = 1 THEN
+	LEAVE tables_loop;
+    END IF;
+
+
+END LOOP tables_loop;
+
+CLOSE cur_tables;
 
 END $$
 DELIMITER ;
